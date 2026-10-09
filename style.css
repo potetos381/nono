@@ -1,0 +1,568 @@
+:root {
+    --bg-dark:  #0a1128;
+    --bg-mid:   #1b263b;
+    --accent:   #4cc9f0;
+    --accent-2: #7b2cbf;
+    --accent-3: #f9c74f;
+    --success:  #2a9d8f;
+    --danger:   #e76f51;
+    --warning:  #f4a261;
+    --text:     #eaf4ff;
+    --text-dim: #a0b4c9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+    color: var(--text);
+    background: radial-gradient(circle at 20% 10%, #1e3a5f 0%, #0a1128 45%, #050818 100%);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ---------- Background ---------- */
+.bubbles {
+    position: fixed; inset: 0;
+    overflow: hidden; pointer-events: none; z-index: 0;
+}
+.bubbles span {
+    position: absolute; bottom: -150px;
+    background: radial-gradient(circle at 30% 30%, rgba(76,201,240,0.45), rgba(123,44,191,0.15));
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(76,201,240,0.35);
+    animation: rise linear infinite;
+}
+@keyframes rise {
+    0%   { transform: translateY(0) scale(0.8); opacity: 0; }
+    15%  { opacity: 0.9; }
+    100% { transform: translateY(-115vh) scale(1.2); opacity: 0; }
+}
+.bubbles span:nth-child(1)  { left: 5%;  width: 40px; height: 40px; animation-duration: 18s; }
+.bubbles span:nth-child(2)  { left: 15%; width: 20px; height: 20px; animation-duration: 12s; animation-delay: 2s; }
+.bubbles span:nth-child(3)  { left: 25%; width: 60px; height: 60px; animation-duration: 22s; animation-delay: 4s; }
+.bubbles span:nth-child(4)  { left: 40%; width: 30px; height: 30px; animation-duration: 15s; animation-delay: 1s; }
+.bubbles span:nth-child(5)  { left: 55%; width: 50px; height: 50px; animation-duration: 20s; animation-delay: 3s; }
+.bubbles span:nth-child(6)  { left: 70%; width: 25px; height: 25px; animation-duration: 14s; animation-delay: 5s; }
+.bubbles span:nth-child(7)  { left: 82%; width: 45px; height: 45px; animation-duration: 19s; animation-delay: 2.5s; }
+.bubbles span:nth-child(8)  { left: 92%; width: 35px; height: 35px; animation-duration: 17s; animation-delay: 6s; }
+.bubbles span:nth-child(9)  { left: 65%; width: 22px; height: 22px; animation-duration: 13s; animation-delay: 7s; }
+.bubbles span:nth-child(10) { left: 48%; width: 55px; height: 55px; animation-duration: 24s; animation-delay: 3.5s; }
+
+.orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(90px); opacity: 0.35;
+    z-index: 0; pointer-events: none;
+    animation: float 12s ease-in-out infinite;
+}
+.orb-1 { width: 320px; height: 320px; background: var(--accent);   top: -80px;  left: -80px; }
+.orb-2 { width: 400px; height: 400px; background: var(--accent-2); bottom: -120px; right: -100px; animation-delay: 3s; }
+.orb-3 { width: 260px; height: 260px; background: var(--accent-3); top: 40%; right: 15%; animation-delay: 6s; opacity: 0.18; }
+@keyframes float {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50%      { transform: translate(30px,-30px) scale(1.08); }
+}
+
+/* ---------- Card ---------- */
+.card {
+    position: relative; z-index: 2;
+    max-width: 440px;
+    margin: 40px auto;
+    padding: 30px 26px;
+    background: rgba(27,38,59,0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(76,201,240,0.25);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+    text-align: center;
+    animation: cardIn 0.6s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.card::before {
+    content: '';
+    position: absolute; top: 0; left: 20%; right: 20%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+    border-radius: 0 0 6px 6px;
+}
+
+h1, h2 {
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 24px rgba(76,201,240,0.45);
+    margin-bottom: 8px;
+}
+h1 { font-size: 26px; }
+h2 { font-size: 22px; }
+.subtitle { color: var(--text-dim); font-size: 13px; margin-bottom: 18px; }
+
+.machine-icon {
+    width: 90px; height: 90px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #4cc9f0, #1e3a5f 70%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px;
+    box-shadow: 0 0 40px rgba(76,201,240,0.55), inset 0 0 20px rgba(255,255,255,0.2);
+    animation: spinPulse 4s ease-in-out infinite;
+}
+@keyframes spinPulse {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50%      { transform: rotate(8deg) scale(1.06); }
+}
+
+.price {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--accent-3);
+    margin: 14px 0;
+    text-shadow: 0 0 30px rgba(249,199,79,0.6);
+    letter-spacing: 1px;
+}
+.price small { font-size: 16px; color: var(--text-dim); font-weight: 400; }
+
+.status {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 6px 0;
+}
+.s-available   { background: linear-gradient(135deg, #2a9d8f, #21867a); color: #fff; }
+.s-in_use      { background: linear-gradient(135deg, #e76f51, #c95a3c); color: #fff; }
+.s-maintenance { background: linear-gradient(135deg, #f4a261, #e08a45); color: #fff; }
+.s-offline     { background: linear-gradient(135deg, #6c757d, #4d545b); color: #fff; }
+
+label {
+    display: block; text-align: left;
+    margin-top: 14px;
+    font-size: 13px; font-weight: 600;
+    color: var(--text-dim);
+}
+input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid rgba(76,201,240,0.25);
+    background: rgba(10,17,40,0.7);
+    color: var(--text);
+    font-size: 14px;
+    transition: all 0.25s ease;
+    outline: none;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(76,201,240,0.2), 0 0 20px rgba(76,201,240,0.3);
+    background: rgba(10,17,40,0.95);
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 20px;
+    width: 100%;
+    padding: 15px 22px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(76,201,240,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(76,201,240,0.6); }
+.btn::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    transition: left 0.6s;
+}
+.btn:hover::after { left: 100%; }
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    box-shadow: none;
+}
+.btn-secondary:hover { background: rgba(76,201,240,0.12); }
+
+.alert {
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin: 14px 0;
+    font-size: 13px;
+    text-align: left;
+}
+.alert-error {
+    background: rgba(231,111,81,0.15);
+    border: 1px solid rgba(231,111,81,0.5);
+    color: #ffb3a1;
+}
+.alert-success {
+    background: rgba(42,157,143,0.15);
+    border: 1px solid rgba(42,157,143,0.5);
+    color: #7fe3d6;
+}
+
+.info-row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px dashed rgba(76,201,240,0.2);
+}
+.info-row:last-of-type { border-bottom: none; }
+.info-row span:first-child { color: var(--text-dim); }
+.info-row span:last-child  { color: var(--accent-3); font-weight: 700; }
+
+.check {
+    font-size: 80px;
+    color: var(--success);
+    text-shadow: 0 0 40px rgba(42,157,143,0.7);
+    animation: pop 0.6s cubic-bezier(.3,1.5,.6,1) both;
+}
+@keyframes pop {
+    0%   { transform: scale(0); opacity: 0; }
+    70%  { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.timer {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--accent-3);
+    text-shadow: 0 0 30px rgba(249,199,79,0.6);
+    letter-spacing: 2px;
+    margin-top: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.progress {
+    width: 100%; height: 14px;
+    background: rgba(10,17,40,0.7);
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 22px 0 10px;
+    border: 1px solid rgba(76,201,240,0.3);
+}
+.progress-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #4cc9f0, #7b2cbf, #f9c74f);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    transition: width 1s linear;
+    border-radius: 20px;
+}
+@keyframes shimmer {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+.done-banner {
+    display: none;
+    margin: 20px 0;
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2a9d8f, #21867a);
+    box-shadow: 0 0 40px rgba(42,157,143,0.6);
+    animation: pop 0.6s cubic-bezier(.3,1.5,.6,1) both;
+}
+.done-banner.show { display: block; }
+.done-banner h3 { color: #fff; font-size: 22px; margin-bottom: 6px; }
+.done-banner
+
+/* ============================================
+   COUNTDOWN ANIMATIONS
+   ============================================ */
+
+/* Pulsing ring around the timer */
+.timer-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 20px;
+}
+.timer-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--accent-3);
+    opacity: 0;
+    pointer-events: none;
+}
+.timer-wrap.pulse::before {
+    animation: pulseRing 1s ease-out;
+}
+@keyframes pulseRing {
+    0%   { opacity: 0.9; transform: scale(0.85); }
+    100% { opacity: 0;   transform: scale(1.4); }
+}
+
+/* Timer text */
+.timer {
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--accent-3);
+    text-shadow: 0 0 30px rgba(249, 199, 79, 0.6);
+    letter-spacing: 3px;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+    display: inline-block;
+}
+
+/* Color zones based on time left */
+.timer.warn {
+    color: #f4a261;
+    text-shadow: 0 0 30px rgba(244, 162, 97, 0.7);
+}
+.timer.danger {
+    color: #e76f51;
+    text-shadow: 0 0 30px rgba(231, 111, 81, 0.8);
+    animation: dangerPulse 1s ease-in-out infinite;
+}
+@keyframes dangerPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+}
+
+/* Tick bump when the second changes */
+.timer.tick {
+    animation: tickBump 0.25s ease-out;
+}
+@keyframes tickBump {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+
+/* Shake in the final seconds */
+.timer.shake {
+    animation: shakeTimer 0.6s ease-in-out infinite;
+}
+@keyframes shakeTimer {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-3px) rotate(-1deg); }
+    75%      { transform: translateX(3px) rotate(1deg); }
+}
+
+/* ============================================
+   PROGRESS RING (SVG)
+   ============================================ */
+.ring-wrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 12px auto;
+}
+.ring-wrap svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 12px rgba(76, 201, 240, 0.5));
+}
+.ring-wrap .ring-bg {
+    fill: none;
+    stroke: rgba(76, 201, 240, 0.15);
+    stroke-width: 12;
+}
+.ring-wrap .ring-fg {
+    fill: none;
+    stroke: url(#ringGradient);
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}
+.ring-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+.ring-inner .ring-time {
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--accent-3);
+    text-shadow: 0 0 24px rgba(249, 199, 79, 0.6);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 2px;
+}
+.ring-inner .ring-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    margin-top: 4px;
+}
+
+/* ============================================
+   FLIP DIGITS (Board page)
+   ============================================ */
+.flip {
+    display: inline-block;
+    animation: flipIn 0.4s ease-out;
+    transform-origin: center;
+}
+@keyframes flipIn {
+    0%   { transform: rotateX(-90deg) scale(0.85); opacity: 0; }
+    100% { transform: rotateX(0deg) scale(1); opacity: 1; }
+}
+
+/* ============================================
+   DONE BURST (celebration)
+   ============================================ */
+.done-burst {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    overflow: hidden;
+}
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 14px;
+    top: -20px;
+    opacity: 0.9;
+    animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* Green glow flash when cycle finishes */
+.glow-flash {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, rgba(42, 157, 143, 0.55) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 90;
+    animation: glowFlash 1.2s ease-out forwards;
+}
+@keyframes glowFlash {
+    0%   { opacity: 0; }
+    20%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ============================================
+   RING FLASH on danger
+   ============================================ */
+@keyframes ringDanger {
+    0%, 100% { stroke: #e76f51; }
+    50%      { stroke: #f4a261; }
+}
+.ring-wrap.danger .ring-fg {
+    animation: ringDanger 1s ease-in-out infinite;
+}
+
+/* ============================================
+   BOARD CARD — SMOOTH TICK
+   ============================================ */
+.bm-remaining {
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+.bm-remaining.warn {
+    color: #f4a261;
+    text-shadow: 0 0 26px rgba(244, 162, 97, 0.7);
+}
+.bm-remaining.danger {
+    color: #e76f51;
+    text-shadow: 0 0 26px rgba(231, 111, 81, 0.8);
+    animation: dangerPulse 1s ease-in-out infinite;
+}
+
+/* ============================================
+   AVAILABLE-AT BADGE (public info)
+   ============================================ */
+
+.avail-at {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+/* While running */
+.avail-at.running {
+    background: rgba(76, 201, 240, 0.12);
+    border: 1px solid rgba(76, 201, 240, 0.35);
+    color: #bfe9ff;
+}
+.avail-at.running .avail-time {
+    color: var(--accent-3);
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(249, 199, 79, 0.55);
+}
+
+/* Last 10 seconds — turn red */
+.avail-at.running.danger {
+    background: rgba(231, 111, 81, 0.15);
+    border-color: rgba(231, 111, 81, 0.6);
+    color: #ffb3a1;
+    animation: availPulse 1s ease-in-out infinite;
+}
+.avail-at.running.danger .avail-time {
+    color: #ff8a68;
+    text-shadow: 0 0 14px rgba(231, 111, 81, 0.7);
+}
+@keyframes availPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.03); }
+}
+
+/* When available now */
+.avail-at.now {
+    background: rgba(42, 157, 143, 0.15);
+    border: 1px solid rgba(42, 157, 143, 0.5);
+    color: #7fe3d6;
+    font-weight: 700;
+}
+
+/* When under maintenance */
+.avail-at.offline {
+    background: rgba(108, 117, 125, 0.15);
+    border: 1px solid rgba(108, 117, 125, 0.4);
+    color: #c8d4e0;
+}
+
+/* Small relative time under the main clock */
+.avail-rel {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-top: 6px;
+    text-transform: uppercase;
+}
+
+/* Highlight pill on landing page cards */
+.m-card .avail-at {
+    margin-top: 10px;
+    font-size: 12px;
+    padding: 8px 10px;
+}
